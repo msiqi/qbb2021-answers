@@ -11,7 +11,7 @@
 (base) (12:45:01)~/qbb2021-answers/day1-lunch/$wc -l *.bed > feature_count.txt
 
 2C
-There are the most methylations on K27 compared to the other lysine residue on H3
+There are the most methylation regions for K27 compared to the other lysine residue on H3
 There are about 30,000 fly-based genes
 
 3A
