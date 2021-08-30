@@ -13,3 +13,10 @@
 2C
 There are the most methylations on K27 compared to the other lysine residue on H3
 There are about 30,000 fly-based genes
+
+3A
+(base) (12:58:33)~/qbb2021-answers/day1-lunch/$cut -f 1 fbgenes.bed | uniq -c > fbgenes.info
+
+3C
+Chromosome 2R has the most genes
+There are 8 different fly-based chromosomes
