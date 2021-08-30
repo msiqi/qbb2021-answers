@@ -6,3 +6,10 @@
 (base) (12:37:20)~/qbb2021-answers/day1-lunch/$cp /Users/cmdb/qbb2021/data/S2_9state.bed .
 (base) (12:37:30)~/qbb2021-answers/day1-lunch/$cp /Users/cmdb/qbb2021/data/dm6.chrom.sizes .
 (base) (12:37:40)~/qbb2021-answers/day1-lunch/$cp /Users/cmdb/qbb2021/data/fbgenes.bed .
+
+2A
+(base) (12:45:01)~/qbb2021-answers/day1-lunch/$wc -l *.bed > feature_count.txt
+
+2C
+There are the most methylations on K27 compared to the other lysine residue on H3
+There are about 30,000 fly-based genes
