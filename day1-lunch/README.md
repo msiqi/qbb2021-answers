@@ -20,3 +20,10 @@ There are about 30,000 fly-based genes
 3C
 Chromosome 2R has the most genes
 There are 8 different fly-based chromosomes
+
+4A
+(base) (13:35:15)~/qbb2021-answers/day1-lunch/$bedtools intersect -a fbgenes.bed -b K9me3.bed | cut -f 1,4 | uniq | cut -f 1 | uniq -c > chr-with-fbgenes-k9.txt
+
+4D
+Chromosome X has the most genes with K9 methylation
+There is K9 methylation on 7 different chromosomes
