@@ -1,0 +1,10 @@
+total 10736
+ 760 K27me3.bed
+ 336 K9me3.bed
+  32 LADs_Kc.bed
+   8 README.md
+2344 S2_9state.bed
+   0 directory.txt
+  88 dm6.chrom.sizes
+6672 fbgenes.bed
+ 496 k4me3.bed
