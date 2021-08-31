@@ -20,7 +20,7 @@ for line in data[1:]:
 
 #look through map_file and assign protein ids to gene ids in mapping if gene id is a key
 for line in map_file:
-    fields = line.split("\t")
+    fields = line.strip("\n").split("\t")
     gene_id = fields[0]
     protein_id = fields[1]
     if gene_id in mapping:
@@ -34,4 +34,3 @@ for line in data[1:]:
     fields = line.strip("\n").split("\t")
     gene_id = fields[8]
     print(line.strip("\n")+"\t"+mapping[gene_id])
-print(sys.argv)
