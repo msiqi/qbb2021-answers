@@ -82,9 +82,9 @@ for seq in target_seq:
                     kmer_ext= kmer
                     perf_match = True
                     while perf_match:
-                        if t_pos+k+ext<=len(seq[1])-1 and q_pos+k+ext<=len(query_seq[0][1]):
-                            if seq[1][t_pos+k+ext]==query_seq[0][1][q_pos+k+ext]:
-                                kmer_ext += seq[1][t_pos+k+ext]
+                        if t_pos+k+ext<=len(seq[1])-1 and q_pos+k+ext<=len(query_seq[0][1])-1: #check that there is a next base for each seq
+                            if seq[1][t_pos+k+ext]==query_seq[0][1][q_pos+k+ext]: #check if next bases match
+                                kmer_ext += seq[1][t_pos+k+ext] #if so add base to extended kmer and increment ext to move to next base
                                 ext += 1
                             else:
                                 perf_match = False
