@@ -71,7 +71,7 @@ for seq in target_seq:
     #for each kmer dictionary of a target seq, check if any kmers from query match, if so, print output as match
     for kmer in query_kmers.keys():
         if kmer in target_kmers:
-            print(seq[0], query_kmers[kmer], target_kmers[kmer], kmer)
- 
+            print(seq[0], target_kmers[kmer], query_kmers[kmer], kmer)
+
 target_file.close()
 query_file.close()
