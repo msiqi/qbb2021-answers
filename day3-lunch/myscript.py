@@ -1,3 +1,7 @@
+'''
+python myscript.py BDGP6.Ensembl.81.gtf 3R 21378950 | column -t > myscript.out
+'''
+
 import sys
 
 #store arguments from command line
@@ -82,6 +86,6 @@ while searching:
         searching = False
         near_gene = genes[mid]
         gene_dist = 0
-
-print(near_gene, abs(gene_dist), loop_count)
+print("gene", "gene_dist", "iterations")
+print(near_gene[0], abs(gene_dist), loop_count)
 
