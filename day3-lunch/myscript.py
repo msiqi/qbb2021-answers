@@ -75,7 +75,7 @@ while searching:
         genes = genes[:mid+1]
     #if more, check if mut_pos if before end_pos of mid gene
     elif mut_pos > genes[mid][1]:
-        if mut_pos < genes[mid][2]: #if so, save mid gene and end loop
+        if mut_pos <= genes[mid][2]: #if so, save mid gene and end loop
             searching = False
             near_gene = genes[mid]
             gene_dist = 0
@@ -88,4 +88,3 @@ while searching:
         gene_dist = 0
 print("gene", "gene_dist", "iterations")
 print(near_gene[0], abs(gene_dist), loop_count)
-

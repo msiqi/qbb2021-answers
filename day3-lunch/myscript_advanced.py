@@ -88,7 +88,7 @@ for i in range(20):
             act_genes = act_genes[:mid+1]
         #if more, check if mut_pos if before end_pos of mid gene
         elif mut_pos > act_genes[mid][1]:
-            if mut_pos < act_genes[mid][2]: #if so, save mid gene and end loop
+            if mut_pos <= act_genes[mid][2]: #if so, save mid gene and end loop
                 searching = False
                 near_gene = act_genes[mid]
                 gene_dist = 0
