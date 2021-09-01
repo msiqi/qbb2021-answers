@@ -58,10 +58,10 @@ while searching:
 
     #to avoid infinite loop, handle cases where remaining list has just 2 items
     if len(genes) == 2:
-        if genes[0][2]-mut_pos < genes[1][1]-mut_pos:
+        if mut_pos-genes[0][2] < genes[1][1]-mut_pos:
             near_gene = genes[0]
-            gene_dist = genes[0][2]-mut_pos
-        elif genes[1][1]-mut_pos < genes[0][2]-mut_pos:
+            gene_dist = mut_pos-genes[0][2]
+        elif genes[1][1]-mut_pos < mut_pos-genes[0][2]:
             near_gene = genes[1]
             gene_dist = genes[1][1]-mut_pos
         else:
@@ -87,4 +87,4 @@ while searching:
         near_gene = genes[mid]
         gene_dist = 0
 print("gene", "gene_dist", "iterations")
-print(near_gene[0], abs(gene_dist), loop_count)
+print(near_gene[0], gene_dist, loop_count)
