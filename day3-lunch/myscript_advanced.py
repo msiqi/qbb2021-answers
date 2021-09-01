@@ -71,10 +71,10 @@ for i in range(20):
 
         #to avoid infinite loop, handle cases where remaining list has just 2 items
         if len(act_genes) == 2:
-            if act_genes[0][2]-mut_pos < act_genes[1][1]-mut_pos:
+            if mut_pos-act_genes[0][2] < act_genes[1][1]-mut_pos:
                 near_gene = act_genes[0]
-                gene_dist = act_genes[0][2]-mut_pos
-            elif act_genes[1][1]-mut_pos < act_genes[0][2]-mut_pos:
+                gene_dist = mut_pos-act_genes[0][2]
+            elif act_genes[1][1]-mut_pos < mut_pos-act_genes[0][2]:
                 near_gene = act_genes[1]
                 gene_dist = act_genes[1][1]-mut_pos
             else:
@@ -101,7 +101,7 @@ for i in range(20):
             gene_dist = 0
 
     #add info about near gene to near20, remove this from genes to exclude from future searches
-    near20.append([near_gene[0], abs(gene_dist), loop_count, near_gene[3]])
+    near20.append([near_gene[0], gene_dist, loop_count, near_gene[3]])
     genes.remove(near_gene)
     
 # sort near20 by gene_dist
