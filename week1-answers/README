@@ -1,0 +1,133 @@
+Question 1
+
+1a. samtools faidx ref.fa 
+	cat ref.fa.fai
+	
+	Halomonas	233806	11	70	71
+  
+  	The reference genome is 233,806 base pairs long
+  
+1b. fastqc frag180.1.fq - 35,178 reads, 100 bp long
+	fastqc frag180.2.fq - 35,178 reads, 100 bp long
+	fastqc jump2k.1.fq - 70,355 reads, 50 bp long
+	fastqc jump2k.2.fq - 70,355 reads, 50 bp long
+	
+1c. frag180.1.fq and frag180.2.fq: 35,178 * 100 / 233,806 = ~15 fold coverage
+	jump2k.1.fq and jump2k.2.fq: 70,355 * 50 / 233,806 = ~15 fold coverage
+	
+1d. Look at the fastqc images : "Per base sequence quality"
+
+Question 2
+
+2a. jellyfish count -m 21 -C -s 1000000 *.fq
+	jellyfish histo mer_counts.jf > read.histo
+	grep "50 " reads.histo
+	
+	50 1030
+	
+	There are 1030 21-mers that occur exactly 50 times
+	
+2b. jellyfish dump mer_counts.jf -c | awk '{print $2,$1}' | sort -nr | head -n 10
+
+	104 GCCCACTAATTAGTGGGCGCC
+	104 CGCCCACTAATTAGTGGGCGC
+	104 CCCACTAATTAGTGGGCGCCG
+	102 ACGGCGCCCACTAATTAGTGG
+	100 AACAGGCCAGCTTATAAGCTG
+	99 ACAGGCCAGCTTATAAGCTGG
+	96 CAGGCCAGCTTATAAGCTGGC
+	94 AGGCCAGCTTATAAGCTGGCC
+	82 AGCATCGCCCACATGTGGGCG
+	80 GCATCGCCCACATGTGGGCGA
+	
+Learned about awk at: https://unix.stackexchange.com/questions/448535/git-bash-unix-switch-columns-fields-using-cut
+
+2c. Uploaded reads.histo to GenomeScope. 
+	Genome Haploid Length min: 233,510 bp
+
+2d. The GenomeScope min estimate of genome length is shorter than the length of the reference genome by about 300 bp.
+
+Question 3
+
+spades.py --pe1-1 frag180.1.fq --pe1-2 frag180.2.fq --mp1-1 jump2k.1.fq --mp1-2 jump2k.2.fq -o asm -t 4 -k 31
+
+3a. grep -c '>' asm/contigs.fasta
+
+	4
+	
+	There were 4 contigs produced.
+	
+3b. samtools faidx asm/contigs.fasta
+	cat asm/contigs.fasta.fai
+	
+	NODE_1_length_105830_cov_20.649108	105830	36	60	61
+	NODE_2_length_47860_cov_20.367392	47860	107665	60	61
+	NODE_3_length_41351_cov_20.528098	41351	156358	60	61
+	NODE_4_length_39426_cov_20.336388	39426	198434	60	61
+	
+	Total length of contigs = 105,830 + 47,860 + 41,351 + 39,426 = 234,476 bp
+	
+3c. cut -f 2 asm/contigs.fasta.fai | sort -nr
+
+	105830
+	47860
+	41351
+	39426
+	
+	The longest contig is 105,830 bp
+	
+3d. N50 = 47,860 bp
+
+Question 4
+
+4a. dnadiff ref.fa  asm/contigs.fasta
+	nucmer  ref.fa asm/contigs.fasta
+	show-coords out.delta
+	
+	[S1]     [E1]  |     [S2]     [E2]  |  [LEN 1]  [LEN 2]  |  [% IDY]  | [TAGS]
+	=====================================================================================
+	  127965   233794  |        1   105830  |   105830   105830  |    99.99  | Halomonas	NODE_1_length_105830_cov_20.649108
+	   40651    88510  |        1    47860  |    47860    47860  |   100.00  | Halomonas	NODE_2_length_47860_cov_20.367392
+	       3    26789  |        1    26787  |    26787    26787  |   100.00  | Halomonas	NODE_3_length_41351_cov_20.528098
+	   26790    40641  |    27500    41351  |    13852    13852  |   100.00  | Halomonas	NODE_3_length_41351_cov_20.528098
+	   88532   127957  |        1    39426  |    39426    39426  |   100.00  | Halomonas	NODE_4_length_39426_cov_20.336388
+	
+	The average identity is 99.9975%
+
+	cat out.report
+
+4b. The length of the longest alignment is 105,830 bp
+
+4c. There is 1 insertion and 5 deletions
+
+Question 5
+
+	show-coords out.delta
+
+5a. base 26788-27499 on NODE_3_length_41351_cov_20.528098 (assembly)
+	inserted between base 26789-26790 on Halomonas (reference)
+	
+5b. The novel insertion is 712 bp long
+
+5c. samtools faidx asm/contigs.fasta NODE_3_length_41351_cov_20.528098:26788-27499
+
+	CGCCCATGCGTAGGGGCTTCTTTAATTACTTGATTGACGCATGCCCCTCGTTCTACATGT
+	CTAGCTTCGTAACTGCCCCGATTTATACAGGAGCATATGCGTTTCGTAGTGCCGGGAATG
+	CATACCAAAGGGCTCACGGCGGGTACGCCACAATGGCTCAAGTCGAAAATGAATCGAAGA
+	CAACAAGGAATACCGTACCCAATTACTCAAGGACCTCATACACCATCCCATGCTACTTAT
+	CTACAGACATACACGCCAGCACCCAGCAACCAAAGCACACCGACGATAAGACTACAATCG
+	CGATAAGCACAACTTACATTAGGAGGCCCGGCAAATCTTGACGGCGTTAAGTCCGACACG
+	AATACCCCCCGACAAAAGCCTCGTATTCCGAGAGTACGAGAGTGCACAAAGCACCAAGGC
+	GGGGCTTCGGTACATCCACCAGTAGTCCCGTCGTGGCGGATTTTCGTCGCGGATGATCCG
+	AGGATTTCCTGCCTTGCCGAACACCTTACGTCATTCGGGGATGTCATAAAGCCAAACTTA
+	GGCAAGTAGAAGATGGAGCACGGTCTAAAGGATTAAAGTCCTCGAATAACAAAGGACTGG
+	AGTGCCTCAGGCATCTCTGCCGATCTGATTGCAAGAAAAAATGACAATATTAGTAAATTA
+	GCCTATGAATAGCGGCTTTAAGTTAATGCCGAGGTCAATATTGACATCGGTA
+	
+5d. samtools faidx asm/contigs.fasta NODE_3_length_41351_cov_20.528098:26788-27499 > insertion.txt
+	python dna-decode.py -d --input insertion.txt
+
+	The decoded message :  Congratulations to the 2021 CMDB @ JHU class!  Keep on looking for little green aliens...
+
+
+
