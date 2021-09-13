@@ -1,0 +1,3 @@
+Really great work!! Nothing you need to change. A couple of notes:
+1. In your allele frequency spectrum, you've labelled the y-axis as "number of occurences in population". Just to clarify, the y-axis should be the number of variable sites across the genome that have the given alternate allele frequency. It is the allele frequency that is defined within the population.
+2. In your PCA plot for male vs. female, it might be helpful to set the alpha value below 1 so that you can see both the male and female points.
