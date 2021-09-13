@@ -1,0 +1,4 @@
+This is a good start! Your MA plot looks really good, but your time series has some issues:
+1. The question asks you to plot the stage 14 _replicates_ on top of the initial data. There is a separate file in `qbb2021/data/` called `replicates.csv` that contains the stage 14 replicate information. Here, you've plotted plotted the intial data and then re-plotted just the stage 14 data from the same initial data (that's why the `+`s are all on the line). You should be plotting the data from the `replicates.csv` file with the `+` instead (Hint: they don't all fall on the lines).
+
+You're MA plot and time series for the advanced exercise look really good! Wonder if you could make a function that takes a gene name (or list of names) and highlights those specific genes...
