@@ -43,3 +43,15 @@ sort -k 4 G1E_features.bed | bedtools groupby -g 4 -c 4 -o count > G1E_bar.txt
 sort -k 4 ER4_features.bed | bedtools groupby -g 4 -c 4 -o count > ER4_bar.txt
 sort -k 4 peaks_gained_features.bed | bedtools groupby -g 4 -c 4 -o count > peaks_gained_bar.txt
 sort -k 4 peaks_lost_features.bed | bedtools groupby -g 4 -c 4 -o count > peaks_lost_bar.txt
+
+See jupyter notebook for plotting
+
+Part 2: Motif discovery
+
+sort -k8,8nr ER4_peaks.narrowPeak | head -n 100 > ER4_top100.narrowPeak
+bedtools getfasta -fi /Users/cmdb/data/genomes/mm10.fa -bed ER4_top100.narrowPeak > ER4_top100.fa
+
+conda activate chipseq
+meme-chip -db /Users/cmdb/data/meme_db/motifs/motif_databases.12.21.tgz ER4_top100.fa -maxw 20
+
+tomtom memechip_out/motif_alignment.txt JASPAR_CORE_2018/MA*
