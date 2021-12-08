@@ -79,8 +79,8 @@ for j in range(len(sequence2)+1):
     traceback[0,j] = 1
     
 #Fill in F matrix
-for i in range(len(sequence1)+1):
-    for j in range(len(sequence2)+1):
+for i in range(1, len(sequence1)+1):
+    for j in range(1, len(sequence2)+1):
         #Get match score from score matrix
         index1 = score_mat_index.index(sequence1[i-1])
         index2 = score_mat_index.index(sequence2[j-1])
@@ -129,8 +129,6 @@ while i>0 and j>0:
         sequence1_align = sequence1[i-1] + sequence1_align
         sequence2_align = "-" + sequence2_align
         gaps2 += 1
-        
-    final_score += F_matrix[i, j]
 
 #format the output nicely, write to output filepath
 out_file = open(sys.argv[4], "w")
